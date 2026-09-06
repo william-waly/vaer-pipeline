@@ -40,7 +40,7 @@ python vaer_pipeline.py
 Multiple cities:
 
 ```bash
-python vaer_pipeline.py --by "Bergen" "Stavanger" "Trondheim"
+python vaer_pipeline.py --by "Oslo" "Bergen" "Stavanger" "Trondheim"
 ```
 
 The collected data is stored in `vaerdata.csv`.
