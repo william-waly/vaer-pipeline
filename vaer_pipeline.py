@@ -30,7 +30,7 @@ import requests
 import pandas as pd
 
 # ---------------------------------------------------------------------------
-# Oppsett av logging (bruk denne i stedet for print - lettere å feilsøke)
+# Logging - strukturert logging for feilsøking og kjøringsstatus
 # ---------------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
@@ -43,7 +43,7 @@ OUTPUT_FIL = Path("vaerdata.csv")
 
 
 # ---------------------------------------------------------------------------
-# 1. EXTRACT - hente rådata fra API-et
+# 1. EXTRACT - hente rådata fra OpenWeatherMap API
 # ---------------------------------------------------------------------------
 def hent_vaerdata(by: str, api_nokkel: str, max_forsok: int = 3) -> dict:
     """Henter værdata for én by. Prøver på nytt ved feil (exponential backoff)."""
@@ -82,7 +82,7 @@ def hent_vaerdata(by: str, api_nokkel: str, max_forsok: int = 3) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# 2. TRANSFORM - plukke ut og rense det vi trenger
+# 2. TRANSFORM - valider og transformer API-data til et standardisert format
 # ---------------------------------------------------------------------------
 def transformer_data(rådata: dict) -> dict:
     """Plukker ut relevante felt fra det rå API-svaret og validerer dem."""
@@ -107,7 +107,7 @@ def transformer_data(rådata: dict) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# 3. LOAD - legge til raden i CSV-filen (oppretter filen hvis den ikke finnes)
+# 3. LOAD - lagre transformerte værdata i CSV-format
 # ---------------------------------------------------------------------------
 def last_inn(rad: dict, filsti: Path = OUTPUT_FIL) -> None:
     ny_rad_df = pd.DataFrame([rad])
